@@ -12,17 +12,17 @@ from app.main import app
 from app.core.config import settings
 
 if __name__ == "__main__":
-    frontend_path = (Path(__file__).resolve().parent / "frontend" / "index.html").as_uri()
+    server_url = f"http://localhost:{settings.APP_PORT}"
     print("=" * 65)
     print(" VoiceCoach Indic - Language Coach with Your Own Voice")
     print(" Powered by Sarvam AI Indic Speech Models")
     print("=" * 65)
-    print(f"[*] Backend API: http://localhost:{settings.APP_PORT}/docs")
-    print(f"[*] Frontend Studio: {frontend_path}")
+    print(f"[*] Application Studio: {server_url}/")
+    print(f"[*] Interactive API Docs: {server_url}/docs")
     print("[*] Sarvam API Key: Loaded and configured.")
     print("=" * 65)
     print("Opening web interface in your browser...")
-    webbrowser.open(frontend_path)
+    webbrowser.open(f"{server_url}/")
     
-    uvicorn.run("app.main:app", host="0.0.0.0", port=settings.APP_PORT, reload=True, app_dir=str(backend_dir))
+    uvicorn.run("app.main:app", host="127.0.0.1", port=settings.APP_PORT, reload=False, app_dir=str(backend_dir))
 

@@ -19,11 +19,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from fastapi.responses import FileResponse
+from pathlib import Path
+
 # Mount audio cache for streaming audio
 app.mount("/audio", StaticFiles(directory=str(settings.AUDIO_CACHE_DIR)), name="audio")
 
 # Mount API routes
 app.include_router(api_router, prefix="/api/v1")
+
+FRONTEND_INDEX = settings.DATA_DIR.parent / "frontend" / "index.html"
+
+@app.get("/")
+def serve_index():
+    return FileResponse(str(FRONTEND_INDEX))
 
 @app.get("/health")
 def health_check():
