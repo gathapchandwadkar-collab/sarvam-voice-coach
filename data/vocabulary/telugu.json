@@ -1,0 +1,27 @@
+[
+  {
+    "id": "te_001",
+    "category": "Greetings",
+    "native_text": "నమస్కారం, మీరు ఎలా ఉన్నారు?",
+    "transliteration": "Namaskāram, meeru elā unnāru?",
+    "english_meaning": "Hello, how are you?",
+    "difficulty": "beginner"
+  },
+  {
+    "id": "te_002",
+    "category": "Courtesies",
+    "native_text": "చాలా ధన్యవాదాలు",
+    "transliteration": "Chālā dhanyavādālu",
+    "english_meaning": "Thank you very much",
+    "difficulty": "beginner"
+  },
+  {
+    "id": "te_003",
+    "category": "Conversations",
+    "native_text": "నా పేరు రాహుల్, మిమ్మల్ని కలవడం చాలా సంతోషంగా ఉంది.",
+    "transliteration": "Nā pēru Rahul, mimmalni kalavaḍam chālā santōṣhaṅgā undi.",
+    "english_meaning": "My name is Rahul, very happy to meet you.",
+    "difficulty": "intermediate"
+  }
+]
+

@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Node / Frontend
+node_modules/
+dist/
+.cache/
+.next/
+out/
+
+# Environment and sensitive data
+.env
+.env.local
+.env.*.local
+
+# Audio data & cache (ignore generated/uploaded data, keep structure)
+data/audio_cache/*
+!data/audio_cache/.gitkeep
+data/voice_profiles/*
+!data/voice_profiles/.gitkeep
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

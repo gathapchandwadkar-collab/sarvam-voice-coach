@@ -1,0 +1,27 @@
+[
+  {
+    "id": "mr_001",
+    "category": "Greetings",
+    "native_text": "नमस्कार, तुम्ही कसे आहात?",
+    "transliteration": "Namaskār, tumhī kase āhāt?",
+    "english_meaning": "Hello, how are you?",
+    "difficulty": "beginner"
+  },
+  {
+    "id": "mr_002",
+    "category": "Courtesies",
+    "native_text": "खूप खूप धन्यवाद",
+    "transliteration": "Khūp khūp dhanyavād",
+    "english_meaning": "Thank you very much",
+    "difficulty": "beginner"
+  },
+  {
+    "id": "mr_003",
+    "category": "Conversations",
+    "native_text": "माझे नाव सचिन आहे, तुम्हाला भेटून आनंद झाला.",
+    "transliteration": "Mājhe nāv Sachin āhe, tumhālā bheṭūn ānand jhālā.",
+    "english_meaning": "My name is Sachin, glad to meet you.",
+    "difficulty": "intermediate"
+  }
+]
+

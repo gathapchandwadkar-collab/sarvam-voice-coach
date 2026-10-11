@@ -1,0 +1,34 @@
+[
+  {
+    "id": "ta_001",
+    "category": "Greetings",
+    "native_text": "வணக்கம், நீங்கள் எப்படி இருக்கிறீர்கள்?",
+    "transliteration": "Vanakkam, neengal eppadi irukkireergal?",
+    "english_meaning": "Hello, how are you?",
+    "difficulty": "beginner"
+  },
+  {
+    "id": "ta_002",
+    "category": "Courtesies",
+    "native_text": "மிக்க நன்றி",
+    "transliteration": "Mikka nandri",
+    "english_meaning": "Thank you very much",
+    "difficulty": "beginner"
+  },
+  {
+    "id": "ta_003",
+    "category": "Conversations",
+    "native_text": "என் பெயர் கார்த்திக், உங்களை சந்தித்ததில் மகிழ்ச்சி.",
+    "transliteration": "En peyar Karthik, ungalai sandhithathil magizhchi.",
+    "english_meaning": "My name is Karthik, happy to meet you.",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "ta_004",
+    "category": "Pronunciation Practice",
+    "native_text": "தமிழ் மொழியின் சிறப்பு மற்றும் அழகு",
+    "transliteration": "Thamizh mozhiyin sirappu matrum azhagu",
+    "english_meaning": "The uniqueness and beauty of the Tamil language",
+    "difficulty": "advanced"
+  }
+]

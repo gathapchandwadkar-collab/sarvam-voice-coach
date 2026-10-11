@@ -1,0 +1,27 @@
+[
+  {
+    "id": "kn_001",
+    "category": "Greetings",
+    "native_text": "ನಮಸ್ಕಾರ, ನೀವು ಹೇಗಿದ್ದೀರಿ?",
+    "transliteration": "Namaskāra, neevu hēgiddīri?",
+    "english_meaning": "Hello, how are you?",
+    "difficulty": "beginner"
+  },
+  {
+    "id": "kn_002",
+    "category": "Courtesies",
+    "native_text": "ತುಂಬಾ ಧನ್ಯವಾದಗಳು",
+    "transliteration": "Tumbā dhanyavādagalu",
+    "english_meaning": "Thank you very much",
+    "difficulty": "beginner"
+  },
+  {
+    "id": "kn_003",
+    "category": "Conversations",
+    "native_text": "ನನ್ನ ಹೆಸರು ಸುರೇಶ್, ನಿಮ್ಮನ್ನು ಭೇಟಿಯಾಗಿದ್ದು ಸಂತೋಷವಾಯಿತು.",
+    "transliteration": "Nanna hesaru Suresh, nimmannu bhēṭiyāgiddu santōṣhavāyitu.",
+    "english_meaning": "My name is Suresh, pleased to meet you.",
+    "difficulty": "intermediate"
+  }
+]
+

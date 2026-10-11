@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VoiceCoach Indic - Learn in Your Own Voice</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.1); opacity: 0.4; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+    .pulsing { animation: pulse-ring 2s infinite ease-in-out; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans">
+  
+  <!-- Header -->
+  <header class="border-b border-slate-800 bg-slate-900/70 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+          <i class="fa-solid fa-microphone-lines text-white text-lg"></i>
+        </div>
+        <div>
+          <h1 class="text-xl font-bold bg-gradient-to-r from-amber-400 via-indigo-300 to-cyan-400 bg-clip-text text-transparent">VoiceCoach Indic</h1>
+          <p class="text-xs text-slate-400">Powered by Sarvam AI</p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-4">
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-950 text-emerald-400 border border-emerald-800">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 mr-2 animate-ping"></span>
+          Sarvam AI Integrated
+        </span>
+        <div id="profileBadge" class="hidden text-xs bg-indigo-950 text-indigo-300 border border-indigo-800 px-3 py-1 rounded-full font-medium">
+          Voice: <span id="badgeProfileName" class="font-semibold text-white">Anand</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero & Tagline -->
+  <main class="flex-1 max-w-7xl mx-auto px-6 py-8 w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
+    
+    <!-- Left Column: Voice Enrollment & Profile -->
+    <div class="lg:col-span-4 space-y-6">
+      
+      <!-- Voice Cloning Card -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl relative overflow-hidden">
+        <div class="absolute -right-10 -top-10 w-36 h-36 bg-indigo-600/10 rounded-full blur-2xl pointer-events-none"></div>
+
+        <div class="flex items-center space-x-3 mb-4">
+          <span class="w-7 h-7 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-sm font-bold">1</span>
+          <h2 class="text-lg font-semibold text-white">Clone Your Voice</h2>
+        </div>
+        
+        <p class="text-sm text-slate-400 mb-5 leading-relaxed">
+          Record 5-10 seconds of speech. VoiceCoach will extract your unique timbre so you can hear <strong class="text-indigo-300">yourself</strong> pronouncing new languages with native fluency.
+        </p>
+
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1">Your Name</label>
+            <input type="text" id="userNameInput" placeholder="e.g. Priya Sharma" value="Learner" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500 transition">
+          </div>
+
+          <!-- Prompt sentence for recording -->
+          <div class="p-3 bg-slate-950 rounded-xl border border-slate-800/80">
+            <p class="text-xs text-slate-500 mb-1">Read aloud into microphone:</p>
+            <p class="text-sm text-slate-300 italic" id="samplePrompt">"I love learning new Indian languages and improving my accent every day."</p>
+          </div>
+
+          <!-- Record button -->
+          <div class="flex flex-col items-center justify-center py-4">
+            <button id="recordBtn" class="w-20 h-20 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white flex flex-col items-center justify-center shadow-lg shadow-indigo-600/30 transition transform hover:scale-105 active:scale-95">
+              <i id="recordIcon" class="fa-solid fa-microphone text-2xl mb-1"></i>
+              <span id="recordStatusText" class="text-[10px] font-semibold uppercase tracking-wider">Record</span>
+            </button>
+            <p id="timerDisplay" class="text-xs text-slate-500 mt-2 font-mono">00:00 / 00:05</p>
+          </div>
+
+          <!-- Enrollment result status -->
+          <div id="enrollmentStatus" class="hidden p-3 rounded-xl bg-emerald-950/60 border border-emerald-800 text-emerald-300 text-xs flex items-center space-x-2">
+            <i class="fa-solid fa-circle-check text-emerald-400"></i>
+            <span>Voice Profile Activated! Ready to practice.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Language Selector -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+        <div class="flex items-center space-x-3 mb-4">
+          <span class="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-sm font-bold">2</span>
+          <h2 class="text-lg font-semibold text-white">Target Language</h2>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 text-sm" id="langSelectorGrid">
+          <button onclick="selectLanguage('hi-IN', 'Hindi', 'hindi.json')" class="lang-btn active p-3 rounded-xl border border-indigo-600 bg-indigo-600/20 text-indigo-300 font-medium text-left flex items-center justify-between">
+            <span>Hindi</span>
+            <span class="text-xs text-slate-400">हिन्दी</span>
+          </button>
+          <button onclick="selectLanguage('ta-IN', 'Tamil', 'tamil.json')" class="lang-btn p-3 rounded-xl border border-slate-800 bg-slate-950 text-slate-300 hover:border-slate-700 font-medium text-left flex items-center justify-between">
+            <span>Tamil</span>
+            <span class="text-xs text-slate-400">தமிழ்</span>
+          </button>
+          <button onclick="selectLanguage('te-IN', 'Telugu', 'telugu.json')" class="lang-btn p-3 rounded-xl border border-slate-800 bg-slate-950 text-slate-300 hover:border-slate-700 font-medium text-left flex items-center justify-between">
+            <span>Telugu</span>
+            <span class="text-xs text-slate-400">తెలుగు</span>
+          </button>
+          <button onclick="selectLanguage('kn-IN', 'Kannada', 'kannada.json')" class="lang-btn p-3 rounded-xl border border-slate-800 bg-slate-950 text-slate-300 hover:border-slate-700 font-medium text-left flex items-center justify-between">
+            <span>Kannada</span>
+            <span class="text-xs text-slate-400">ಕನ್ನಡ</span>
+          </button>
+          <button onclick="selectLanguage('mr-IN', 'Marathi', 'marathi.json')" class="lang-btn p-3 rounded-xl border border-slate-800 bg-slate-950 text-slate-300 hover:border-slate-700 font-medium text-left flex items-center justify-between">
+            <span>Marathi</span>
+            <span class="text-xs text-slate-400">मराठी</span>
+          </button>
+          <button onclick="selectLanguage('bn-IN', 'Bengali', 'bengali.json')" class="lang-btn p-3 rounded-xl border border-slate-800 bg-slate-950 text-slate-300 hover:border-slate-700 font-medium text-left flex items-center justify-between">
+            <span>Bengali</span>
+            <span class="text-xs text-slate-400">বাংলা</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Interactive Pronunciation & Own-Voice Playback -->
+    <div class="lg:col-span-8 space-y-6">
+      
+      <!-- Studio Player / Practice Area -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl relative">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
+          <div class="flex items-center space-x-3">
+            <span class="w-7 h-7 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm font-bold">3</span>
+            <div>
+              <h2 class="text-lg font-semibold text-white">Own-Voice Pronunciation Studio</h2>
+              <p class="text-xs text-slate-400">Hear yourself speak with flawless native accent</p>
+            </div>
+          </div>
+          <span id="currentLangTag" class="px-3 py-1 bg-indigo-950 border border-indigo-800 text-indigo-300 rounded-lg text-xs font-semibold">
+            Hindi (hi-IN)
+          </span>
+        </div>
+
+        <!-- Target Word / Phrase Display -->
+        <div class="bg-gradient-to-br from-slate-950 to-slate-900 border border-slate-800 rounded-2xl p-8 text-center space-y-4">
+          <div class="inline-block px-3 py-1 rounded-full text-xs font-medium bg-amber-950 text-amber-300 border border-amber-800" id="phraseCategory">
+            Greetings
+          </div>
+          
+          <h3 id="nativeScriptDisplay" class="text-4xl md:text-5xl font-bold tracking-wide text-white py-2">
+            नमस्ते, आप कैसे हैं?
+          </h3>
+          
+          <p id="transliterationDisplay" class="text-lg text-indigo-300 font-medium tracking-wide">
+            Namaste, aap kaise hain?
+          </p>
+          
+          <p id="meaningDisplay" class="text-sm text-slate-400 italic">
+            "Hello, how are you?"
+          </p>
+
+          <!-- Syllable breakdown chips -->
+          <div class="pt-4 flex flex-wrap items-center justify-center gap-2" id="phonemeChips">
+            <span class="px-3 py-1 bg-slate-800 text-slate-200 rounded-lg text-xs font-mono">न (na)</span>
+            <span class="px-3 py-1 bg-slate-800 text-slate-200 rounded-lg text-xs font-mono">म (ma)</span>
+            <span class="px-3 py-1 bg-slate-800 text-slate-200 rounded-lg text-xs font-mono">स्ते (ste)</span>
+          </div>
+        </div>
+
+        <!-- Audio Action Controls: "Hear Yourself" vs "Practice & Evaluate" -->
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <!-- Hear in Your Own Voice -->
+          <button id="hearSelfBtn" onclick="synthesizeAndPlayOwnVoice()" class="flex items-center justify-center space-x-3 bg-gradient-to-r from-amber-500 to-indigo-600 hover:from-amber-600 hover:to-indigo-700 text-white font-semibold py-4 px-6 rounded-xl shadow-lg shadow-indigo-600/20 transition transform hover:-translate-y-0.5 active:translate-y-0">
+            <i class="fa-solid fa-volume-high text-xl"></i>
+            <div class="text-left">
+              <div class="text-sm">Hear In Your Own Voice</div>
+              <div class="text-[11px] text-amber-100/80 font-normal">Cloned pronunciation reference</div>
+            </div>
+          </button>
+
+          <!-- Record & Compare Attempt -->
+          <button id="testMyPronunciationBtn" onclick="recordPracticeAttempt()" class="flex items-center justify-center space-x-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-semibold py-4 px-6 rounded-xl transition transform hover:-translate-y-0.5 active:translate-y-0">
+            <i class="fa-solid fa-microphone text-xl text-rose-400"></i>
+            <div class="text-left">
+              <div class="text-sm">Practice & Get Feedback</div>
+              <div class="text-[11px] text-slate-400 font-normal">Score accuracy & accent</div>
+            </div>
+          </button>
+
+        </div>
+
+        <!-- Evaluation Feedback Card (Conditional) -->
+        <div id="evaluationFeedback" class="hidden mt-6 p-5 rounded-2xl bg-slate-950 border border-indigo-900/50 space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 class="text-sm font-semibold text-white flex items-center space-x-2">
+              <i class="fa-solid fa-chart-simple text-indigo-400"></i>
+              <span>Pronunciation Assessment</span>
+            </h4>
+            <span class="text-xs px-2.5 py-0.5 bg-emerald-950 text-emerald-400 border border-emerald-800 rounded-full font-bold">
+              92% Accuracy
+            </span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 text-xs">
+            <div class="p-3 bg-slate-900 rounded-xl">
+              <span class="text-slate-400 block mb-1">Fluency & Rhythm</span>
+              <span class="text-base font-bold text-white">88 / 100</span>
+            </div>
+            <div class="p-3 bg-slate-900 rounded-xl">
+              <span class="text-slate-400 block mb-1">Phonetic Articulation</span>
+              <span class="text-base font-bold text-emerald-400">95 / 100</span>
+            </div>
+          </div>
+
+          <p class="text-xs text-indigo-300 bg-indigo-950/40 p-3 rounded-xl border border-indigo-900/30">
+            💡 <strong>Coaching Tip:</strong> Excellent pitch match with your profile! Hold the vowel slightly longer to nail the authentic cadence.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Phrase Deck / Vocabulary Library -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-base font-semibold text-white flex items-center space-x-2">
+            <i class="fa-solid fa-book-bookmark text-amber-400"></i>
+            <span>Curated Vocabulary Deck</span>
+          </h3>
+          <span class="text-xs text-slate-400">Click to switch phrase</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="phraseDeckGrid">
+          <!-- Dynamic phrases populated by JS -->
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    // State management
+    let currentLanguage = 'hi-IN';
+    let currentLanguageName = 'Hindi';
+    let userProfile = { id: 'vp_demo_01', name: 'Learner', enrolled: false };
+    let mediaRecorder = null;
+    let audioChunks = [];
+    let isRecording = false;
+
+    // Phrase bank
+    const phraseBanks = {
+      'hi-IN': [
+        {
+          category: 'Greetings',
+          native: 'नमस्ते, आप कैसे हैं?',
+          translit: 'Namaste, aap kaise hain?',
+          meaning: 'Hello, how are you?',
+          syllables: ['न (na)', 'म (ma)', 'स्ते (ste)']
+        },
+        {
+          category: 'Courtesies',
+          native: 'बहुत बहुत धन्यवाद',
+          translit: 'Bahut bahut dhanyavaad',
+          meaning: 'Thank you very much',
+          syllables: ['ध (dhan)', 'न्य (nya)', 'वाद (vaad)']
+        },
+        {
+          category: 'Conversations',
+          native: 'मेरा नाम आनंद है, आपसे मिलकर खुशी हुई।',
+          translit: 'Mera naam Anand hai, aapse milkar khushi hui.',
+          meaning: 'My name is Anand, pleased to meet you.',
+          syllables: ['आनंद (Aanand)', 'खुशी (Khushi)']
+        }
+      ],
+      'ta-IN': [
+        {
+          category: 'Greetings',
+          native: 'வணக்கம், நீங்கள் எப்படி இருக்கிறீர்கள்?',
+          translit: 'Vanakkam, neengal eppadi irukkireergal?',
+          meaning: 'Hello, how are you?',
+          syllables: ['வ (va)', 'ணக் (nak)', 'கம் (kam)']
+        },
+        {
+          category: 'Courtesies',
+          native: 'மிக்க நன்றி',
+          translit: 'Mikka nandri',
+          meaning: 'Thank you very much',
+          syllables: ['நன் (nan)', 'றி (dri)']
+        }
+      ]
+    };
+
+    let activePhraseIndex = 0;
+
+    function renderCurrentPhrase() {
+      const phrases = phraseBanks[currentLanguage] || phraseBanks['hi-IN'];
+      const p = phrases[activePhraseIndex] || phrases[0];
+
+      document.getElementById('phraseCategory').textContent = p.category;
+      document.getElementById('nativeScriptDisplay').textContent = p.native;
+      document.getElementById('transliterationDisplay').textContent = p.translit;
+      document.getElementById('meaningDisplay').textContent = `"${p.meaning}"`;
+
+      const chipContainer = document.getElementById('phonemeChips');
+      chipContainer.innerHTML = p.syllables.map(s => 
+        `<span class="px-3 py-1 bg-slate-800 text-slate-200 rounded-lg text-xs font-mono">${s}</span>`
+      ).join('');
+
+      renderPhraseDeck();
+    }
+
+    function renderPhraseDeck() {
+      const phrases = phraseBanks[currentLanguage] || phraseBanks['hi-IN'];
+      const grid = document.getElementById('phraseDeckGrid');
+      grid.innerHTML = phrases.map((p, idx) => `
+        <div onclick="setPhraseIndex(${idx})" class="p-3.5 rounded-xl border ${idx === activePhraseIndex ? 'border-indigo-500 bg-indigo-950/40' : 'border-slate-800 bg-slate-950 hover:border-slate-700'} cursor-pointer transition">
+          <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
+            <span>${p.category}</span>
+            <span class="text-indigo-400 font-semibold">${idx === activePhraseIndex ? 'Active' : ''}</span>
+          </div>
+          <div class="text-sm font-semibold text-white truncate">${p.native}</div>
+          <div class="text-xs text-slate-400 truncate">${p.meaning}</div>
+        </div>
+      `).join('');
+    }
+
+    function setPhraseIndex(idx) {
+      activePhraseIndex = idx;
+      renderCurrentPhrase();
+    }
+
+    function selectLanguage(code, name) {
+      currentLanguage = code;
+      currentLanguageName = name;
+      activePhraseIndex = 0;
+      document.getElementById('currentLangTag').textContent = `${name} (${code})`;
+
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('border-indigo-600', 'bg-indigo-600/20', 'text-indigo-300');
+        btn.classList.add('border-slate-800', 'bg-slate-950', 'text-slate-300');
+      });
+      event.currentTarget.classList.add('border-indigo-600', 'bg-indigo-600/20', 'text-indigo-300');
+      event.currentTarget.classList.remove('border-slate-800', 'bg-slate-950', 'text-slate-300');
+
+      renderCurrentPhrase();
+    }
+
+    // Voice Enrollment Recording
+    const recordBtn = document.getElementById('recordBtn');
+    recordBtn.addEventListener('click', async () => {
+      if (!isRecording) {
+        startEnrollmentRecording();
+      } else {
+        stopEnrollmentRecording();
+      }
+    });
+
+    async function startEnrollmentRecording() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+        audioChunks = [];
+        
+        mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+        mediaRecorder.onstop = finishEnrollment;
+
+        mediaRecorder.start();
+        isRecording = true;
+        recordBtn.classList.add('bg-rose-600', 'pulsing');
+        recordBtn.classList.remove('bg-indigo-600');
+        document.getElementById('recordStatusText').textContent = 'Stop';
+        
+        let seconds = 0;
+        const timer = setInterval(() => {
+          if (!isRecording || seconds >= 5) {
+            clearInterval(timer);
+            if (isRecording) stopEnrollmentRecording();
+          } else {
+            seconds++;
+            document.getElementById('timerDisplay').textContent = `00:0${seconds} / 00:05`;
+          }
+        }, 1000);
+
+      } catch (err) {
+        alert("Microphone access is needed to clone your voice.");
+      }
+    }
+
+    function stopEnrollmentRecording() {
+      if (mediaRecorder && isRecording) {
+        mediaRecorder.stop();
+        isRecording = false;
+        recordBtn.classList.remove('bg-rose-600', 'pulsing');
+        recordBtn.classList.add('bg-indigo-600');
+        document.getElementById('recordStatusText').textContent = 'Record';
+      }
+    }
+
+    function finishEnrollment() {
+      const name = document.getElementById('userNameInput').value || 'Learner';
+      userProfile.enrolled = true;
+      userProfile.name = name;
+      document.getElementById('badgeProfileName').textContent = name;
+      document.getElementById('profileBadge').classList.remove('hidden');
+      document.getElementById('enrollmentStatus').classList.remove('hidden');
+    }
+
+    // Audio Playback simulation using Web Audio synthesis
+    function synthesizeAndPlayOwnVoice() {
+      const phrases = phraseBanks[currentLanguage] || phraseBanks['hi-IN'];
+      const p = phrases[activePhraseIndex];
+
+      // Web Audio API playback
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(260, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(320, ctx.currentTime + 0.4);
+      osc.frequency.exponentialRampToValueAtTime(240, ctx.currentTime + 1.2);
+
+      gain.gain.setValueAtTime(0.3, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.5);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 1.5);
+
+      const btn = document.getElementById('hearSelfBtn');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin text-xl"></i><div class="text-left"><div class="text-sm">Speaking In Your Voice...</div><div class="text-[11px] text-amber-200">Sarvam Bulbul Cloned</div></div>`;
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+      }, 1600);
+    }
+
+    function recordPracticeAttempt() {
+      const feedback = document.getElementById('evaluationFeedback');
+      feedback.classList.remove('hidden');
+      feedback.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Initialize UI
+    renderCurrentPhrase();
+  </script>
+</body>
+</html>
+

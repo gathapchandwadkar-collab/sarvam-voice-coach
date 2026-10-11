@@ -1,0 +1,34 @@
+[
+  {
+    "id": "hi_001",
+    "category": "Greetings",
+    "native_text": "नमस्ते, आप कैसे हैं?",
+    "transliteration": "Namaste, aap kaise hain?",
+    "english_meaning": "Hello, how are you?",
+    "difficulty": "beginner"
+  },
+  {
+    "id": "hi_002",
+    "category": "Courtesies",
+    "native_text": "बहुत बहुत धन्यवाद",
+    "transliteration": "Bahut bahut dhanyavaad",
+    "english_meaning": "Thank you very much",
+    "difficulty": "beginner"
+  },
+  {
+    "id": "hi_003",
+    "category": "Conversations",
+    "native_text": "मेरा नाम आनंद है, आपसे मिलकर खुशी हुई।",
+    "transliteration": "Mera naam Anand hai, aapse milkar khushi hui.",
+    "english_meaning": "My name is Anand, pleased to meet you.",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "hi_004",
+    "category": "Pronunciation Practice",
+    "native_text": "ऋतु और प्रकृति का सौंदर्य",
+    "transliteration": "Ritu aur prakriti ka saundarya",
+    "english_meaning": "The beauty of seasons and nature",
+    "difficulty": "advanced"
+  }
+]

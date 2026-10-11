@@ -1,0 +1,27 @@
+[
+  {
+    "id": "bn_001",
+    "category": "Greetings",
+    "native_text": "নমস্কার, আপনি কেমন আছেন?",
+    "transliteration": "Nomoshkar, aapni kemon aachen?",
+    "english_meaning": "Hello, how are you?",
+    "difficulty": "beginner"
+  },
+  {
+    "id": "bn_002",
+    "category": "Courtesies",
+    "native_text": "অনেক অনেক ধন্যবাদ",
+    "transliteration": "Onek onek dhonnobad",
+    "english_meaning": "Thank you very much",
+    "difficulty": "beginner"
+  },
+  {
+    "id": "bn_003",
+    "category": "Conversations",
+    "native_text": "আমার নাম শুভম, আপনার সাথে দেখা হয়ে খুব ভালো লাগলো।",
+    "transliteration": "Aamar naam Shubham, aapnar saathe dekha hoye khub bhalo laaglo.",
+    "english_meaning": "My name is Shubham, very glad to meet you.",
+    "difficulty": "intermediate"
+  }
+]
+
